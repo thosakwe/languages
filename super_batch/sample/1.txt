@@ -1,0 +1,18 @@
+let int myInt = 1;
+let matrix<str> strings = ["Hello", "world"];
+let dict myObj = {};
+
+do add(x, y) {
+  ret x + y;
+}
+
+@native echo(string msg);
+
+do main {
+  echo(add(3, 5) as string);
+  ret 0;
+}
+
+template myTemplate {
+  let anonStr = str.null;
+}

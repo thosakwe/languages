@@ -1,0 +1,17 @@
+domain std;
+
+do input():string {
+  native("set /p retVal=");
+  ret_raw;
+}
+
+do prompt(string query):string {
+  echo("%{query}: ");
+  ret input();
+}
+
+do add(x) => x + 2;
+
+do main() {
+  ret add(-2);
+}

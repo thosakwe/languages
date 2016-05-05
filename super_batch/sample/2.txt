@@ -1,0 +1,20 @@
+template Artist {
+  let string name
+}
+
+@inherits(Artist)
+template Singer {}
+
+@inherits(Artist)
+template Rapper {}
+
+do billboard(matrix<Artist> artists) {
+  for (Artist in artists) {
+    echo(artist.name)
+  }
+}
+
+let lilWayne = Rapper.null
+let sho = Singer.null
+
+billboard([lilWayne, sho]);
