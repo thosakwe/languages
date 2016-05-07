@@ -104,6 +104,7 @@ expr:
     | expr PLUS PLUS #PostPlusPlusExpr
     | SUMMA PAREN_L expr COMMA expr PAREN_R CURLY_L ID CURLY_R #DefiniteIntegralExpr
     | SUMMA CURLY_L ID CURLY_R #IndefiniteIntegralExpr
+	| ID PAREN_L ((expr COMMA)* expr)? PAREN_R #InvocationExpr
     | PAREN_L expr PAREN_R #NestedExpr;
 
 WS: (' ' | '\n' | '\r' | '\r\n') -> skip;
