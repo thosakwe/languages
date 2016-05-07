@@ -8,7 +8,7 @@ block locals [
     java.util.HashMap<String, ExprContext> symbols = new java.util.HashMap();
 ]: compilationUnit | scopedStmt;
 
-compilationUnit: (importStmt SEMI?)* (stmt SEMI?)*;
+compilationUnit: (importStmt SEMI?)* stmt*;
 
 importStmt: 
     IMPORT target=STRING #FullImportStmt
@@ -16,7 +16,7 @@ importStmt:
     | IMPORT ID FROM target=STRING #DefaultImportStmt;
 
 stmt:
-    conditionalStmt
+    (conditionalStmt
     | exportStmt
     | incrementStmt
     | invocationStmt
@@ -24,7 +24,7 @@ stmt:
     | reassignStmt
     | returnStmt
     | scopedStmt
-    | varDeclStmt;
+    | varDeclStmt) SEMI?;
     
 scopedStmt:
     doWhileStmt
