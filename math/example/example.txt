@@ -1,0 +1,43 @@
+fn f(x) => cos(x) + 1;
+
+fn g(x) {
+  ret 3 * f(x);
+};
+
+let defIntegral = S(0, 1){f};
+let indefIntegral = S{f};
+let points = [[2, 1], [4, 20]];
+
+fn get_str():vector<int> {
+  let chars = [];
+  let char:int = get();
+  while (char != 13) {
+    chars += char;
+    char = get();
+  }
+
+  ret chars;
+}
+
+fn print_str(str:vector<int>):int {
+  for (int i = 0; i < str.len && str[i] != 0; i++) {
+    put(i);
+  }
+  
+  ret 0;
+}
+
+fn fib(n) => {
+  if (n <= 2) {
+    ret 1;
+  } else {
+    ret fib(n - 1) + fib(n - 2);
+  }
+}
+
+fn area_of_circ(r) => pi * (r ^ 2);
+
+// Derivatives return functions
+let deriv = diff(area_of_circ);
+
+let deriv_of_area_for_3 = deriv(3);
