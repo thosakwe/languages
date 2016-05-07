@@ -166,4 +166,4 @@ HEX: ('0x' [a-zA-Z0-9]+) | ([a-zA-Z0-9]+ 'h');
 INT: MINUS? [0-9]+;
 fragment ESCAPED: '\\"' | '\\r' | '\\n';
 STRING: '"' (ESCAPED | ~('\n'|'\r'))*? '"';
-ID: ('a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0x' | '-') [a-zA-Z0-9_]* (DOT ID)*;
+ID: ('a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0x' | '-' | '{' | '}') [a-zA-Z0-9_]* (DOT ID)*;
