@@ -1,4 +1,7 @@
-# Math
+# Fray
+Originally I used this name for a project that ended up looking just like
+CoffeeScript, so I recycled it.
+
 Another one of those math programming languages. Could be cool, a lot
 of possibilities. Functional, at least for the most part.
 
@@ -36,13 +39,13 @@ I think the design is pretty solid.
           - Solved via Riemann sum
 - `var`
     - Raw variable type
-    - `let var <id>;`
+    - `let var <ID>;`
     - cannot be reassigned
         - must use `.set(value)`
 - `any`
     - Refers to any data
     - Should never be used
-    - Implict default type for any variable
+    - Implicit default type for any variable
 
 # Syntax
 
@@ -55,22 +58,22 @@ let const avogadro:lng = 6.022e23;
 ```
 
 - Integrals
-    - Use `S<id|closureexpr>` to denote an integral of the
+    - Use `$<id|closureexpr>` to denote an integral of the
       given function. Using a closure might be messy
 
 ```
 fn f(x) => x + 2;
 
-let indefinite:integral = S{f};
-let definite:integral = S(0, 2){f};
+let indefinite:integral = ${f};
+let definite:integral = $(0, 2){f};
 
 let zero = indefinite.eval(0, 2) - definite.eval();
 ```
 
 ## Variables
-- Declared using `let const? <id> = <expr>`
-- Reassigned via `<id> = <expr>`
-- `var` can only be declared via `let var <id>` statement
+- Declared using `let const? <ID> = <expr>`
+- Reassigned via `<ID> = <expr>`
+- `var` can only be declared via `let var <ID>` statement
 - `const` variables throw an error if changed
 
 ### Type-checking
@@ -87,8 +90,8 @@ let vector_dbl:vector<dbl> = [1, 2.5, 3.14];
 ```
 
 ## Functions
-- Declared using `fn <id> <closure_expr>`
-- Inline functions look like `fn <id> <arg_spec> => <expr>`
+- Declared using `fn <ID> <closure_expr>`
+- Inline functions look like `fn <ID> <arg_spec> => <expr>`
   - can be derived via `diff()`
 
 ```
@@ -127,9 +130,8 @@ fn add.diff(x) => 2 * x;
 
 ## Exports
 Files can `export` expressions to be referenced in other files.
-- `export <id>`
-- `export <expr> as <id>`
 - `export <expr>`
+- `export <expr> as <ID>`
 
 If an export is not named, then it will be the file's *default export*. Each
 file can only have one.
@@ -146,12 +148,12 @@ Imports the given file. All exports will be copied into the current file's
 symbol table.
 
 ```
-import {[<id>,] <id>}` from "<file>"
+import {[<ID>,] <ID>}` from "<file>"
 ```
 Imports the given exports from the file only.
 
 ```
-import <id> from "<file>"
+import <ID> from "<file>"
 ```
 
 Imports the file's default export, and assigns it to the given variable.

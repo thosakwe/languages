@@ -4,8 +4,8 @@ fn g(x) {
   ret 3 * f(x);
 };
 
-let defIntegral = S(0, 1){f};
-let indefIntegral = S{f};
+let defIntegral = $(0, 1){f};
+let indefIntegral = ${f};
 let points = [[2, 1], [4, 20]];
 
 fn get_str():vector<int> {
