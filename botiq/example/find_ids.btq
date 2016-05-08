@@ -1,0 +1,17 @@
+fn post(url:string):httprequest {
+  httprequest request = new httprequest(url);
+  request.method = "POST";
+  ret request;
+}
+
+const regex rgxIds = /id="([^"]+)"/g;
+
+httprequest request = post("http://google.com");
+let response = await request();
+
+stream<Match> ids = response.pipe(rgxIds);
+
+for (Match match: ids) {
+  print("Found ID: ${match[1]}");
+}
+
