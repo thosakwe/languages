@@ -20,3 +20,11 @@ for some time.
 It would be cool to write a custom VM. The thing about VM's, however,
 is that users have to install them. And then you have to maintain them
 yourself. As an individual coder, I might as well transpile.
+
+# Without ANTLR
+Lexing is easy. For parsing, I find this algorithm to be good:
+1. Loop through tokens
+2. Find all potential parse nodes and store into a queue
+3. Select the longest, consume its tokens and then continue
+parsing
+4. Profit from generated AST
