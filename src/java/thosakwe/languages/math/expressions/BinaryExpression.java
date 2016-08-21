@@ -18,6 +18,8 @@ public class BinaryExpression extends MathExpression {
         leftExpression = left;
         rightExpression = right;
         this.operator = operator.getType();
+
+        //System.out.println("New binary from " + left + " and " + right);
     }
 
     public double getValue() {

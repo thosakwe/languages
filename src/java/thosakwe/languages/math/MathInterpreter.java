@@ -29,6 +29,7 @@ public class MathInterpreter {
             if (mathExpression == null) {
                 throw new Exception("Invalid expression.");
             } else {
+                System.out.println("Parsed expression: " + mathExpression);
                 System.out.println("Result of computation: " + mathExpression.getValue());
             }
 

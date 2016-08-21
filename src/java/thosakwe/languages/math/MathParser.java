@@ -96,12 +96,12 @@ public class MathParser {
         return longest;
     }
 
-    public MathExpression nextExpression() {
+    MathExpression nextExpression() {
         NumberExpression numberExpression = NumberExpr();
         BinaryExpression binaryExpression = BinaryExpr(numberExpression);
         NestedExpression nestedExpression = NestedExpr();
 
-        return (MathExpression) selectFrom(new Node[]{numberExpression, binaryExpression, nestedExpression});
+        return setLastExpression((MathExpression) selectFrom(new Node[]{numberExpression, binaryExpression, nestedExpression}));
     }
 
     private List<Node> findAlternatives(GenericStream<Token> tokenStream) {
@@ -150,34 +150,11 @@ public class MathParser {
 
         if (current != null) {
             if (current.getType().equals(MathLexer.PAREN_L)) {
-                int flashback = tokenStream.getIndex();
+                tokenStream.consume();
+                MathExpression inner = nextExpression();
+                tokenStream.consume(inner.getTokens().size());
 
-                Token lookahead;
-                String text = "";
-
-                while ((lookahead = tokenStream.peek()) != null) {
-                    if (lookahead.getType().equals(MathLexer.PAREN_R)) {
-                        if (text.length() > 0) {
-                            try {
-                                MathParser parser = MathInterpreter.parseString(text);
-                                MathExpression inner = parser.nextExpression();
-
-                                if (inner != null) {
-                                    return new NestedExpression(inner, current.getPos(), lookahead.getPos());
-                                }
-                            } catch (Exception exc) {
-                                return null;
-                            }
-                        }
-
-                        break;
-                    } else {
-                        text += lookahead.getText();
-                        tokenStream.consume();
-                    }
-                }
-
-                tokenStream.seek(flashback);
+                return new NestedExpression(inner, current.getPos(), tokenStream.current().getPos());
             }
         }
 
