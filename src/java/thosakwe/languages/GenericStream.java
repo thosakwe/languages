@@ -7,6 +7,10 @@ public class GenericStream<T> {
     private T[] items;
     private int index = 0;
 
+    public GenericStream() {
+
+    }
+
     public GenericStream(T[] items) {
         this.items = items;
     }
