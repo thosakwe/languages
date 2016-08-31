@@ -1,0 +1,40 @@
+mode organism
+  # Asterisk denotes required
+  scientific_name*: string
+  desc*: string
+
+  # Bio can be anything, but it is required
+  bio*:
+
+mode animal:organism
+  mammal*: bool or true # Default value
+  gestation*: int or 9
+
+mode human:animal
+  # Auto-set values
+  scientific_name = "Homo sapiens", mammal = true, gestation = 9
+
+  last_name: string | /[A-Z][a-z]*/
+
+  # Use deviations to define context-specific rules for the same mode
+  .create {
+    last_name*:
+    bio: string # Bio is already required, no need to re-star it
+  }
+
+  .update {
+    # Remove fields
+    delete scientific_name
+
+    # Forbid fields
+    forbid mammal, gestation
+  }
+
+mode american:human
+  forbid last_name
+
+   # Can extend deviations as well :)
+  .create {
+    bio = "This user's country is messed up, man..."
+  }
+

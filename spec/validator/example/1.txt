@@ -1,0 +1,25 @@
+# Some kind of validation DSL
+
+# Declare external validator in target language
+@foo: "bool foo(a, b) => a == b -1;"
+
+# Preprocessor
+if js {
+  @fubar: "function f(x) { return x === 'hello-world'; }"
+} else if dart {
+  @fubar: "f(x) => x == 'hello-world'"
+} else if java {
+  @fubar:
+  "private Boolean f(String x) {
+    return x.equals(\"hello-world\");
+  }"
+}
+
+# Define a default schema
+mode basic
+  username: required | /[A-Za-z]+/
+  password: required | foo:bar,baz
+
+# Easily extend methods
+mode delete:basic, other
+  foo: bar | bail
