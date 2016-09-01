@@ -1,0 +1,48 @@
+import $sha1 from crypto
+import ObjectId from mongo
+
+@listen(3000)
+server ApiServer {
+  mount Users on "/users"
+}
+
+group Users : Mongo {
+  @override
+  route "/" {
+    throw Forbidden("Cannot list users over HTTP")
+  }
+ 
+ @post
+ route "/signup" {
+   mut userData = body >> only("username", "email", "password") >> validator("Users.create")
+   userData.password = sha1.str(userData.password) // Easily hash
+   let created = collection.insert(userData)
+   
+   return { error: "ok", username: userData.username } >> json
+ }
+ 
+ route "/:id/friends" {
+   safe let user = collect.findOne({ _id: new ObjectId(id) })
+   
+   if (user is Error) {
+     throw NotFound("No such user")
+   }
+   
+   safe let friendships = collection.query({ friend1: id }).or({ friend2 : id }).exec().unique((x) => x._id)
+
+   if (friendships is Error || friendships.empty)
+     return { error: "ok", result: { items: [], total: 0, pages: 0 } } >> json
+     
+   let result = []
+   
+   return {
+     error: "ok",
+     result: {
+       items: result,
+       total: result.len,
+       pages: result.len - (result.len % 5)
+     } 
+    } >> json
+ }
+ 
+}
