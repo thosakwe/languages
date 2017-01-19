@@ -39,6 +39,6 @@ server App : ILoggable {
   // completely fresh instance.
   
   ret serve(App()).then(server => {
-    print('Listening at http://localhost:${server.port});
+    print('Listening at http://localhost:${server.port}');
   });
 }
