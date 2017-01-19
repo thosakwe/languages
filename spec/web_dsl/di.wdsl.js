@@ -25,7 +25,7 @@ proto SomeSingleton {
 
 server App : ILoggable {
   route "/greet/:id{[0-9]+}" (@parse id:int, @inject singleton:SomeSingleton) {
-    ret { message: singleton.hello };
+    return { message: singleton.hello };
   }
 }
 
@@ -38,7 +38,7 @@ server App : ILoggable {
   // Using `new` requires all args to be provided, and creates a
   // completely fresh instance.
   
-  ret serve(App()).then(server => {
+  return serve(App()).then(server => {
     print('Listening at http://localhost:${server.port}');
   });
 }
