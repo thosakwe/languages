@@ -15,7 +15,13 @@ proto DbEndpoint : Rest {
 server App {
   let _db:Database;
   
-  // Copied from Dart, but hey, DI!
+  // Assuming you are instantiating with DI:
+  //
+  // If no `db` is provided, the registered singleton
+  // will be used, or one will be instantiated via DI.
+  //
+  // If you DO provide a `db`, and there is none registered
+  // already, then it will become the global singleton.
   constructor App(@inject this._db);
 
   // You can call a type, have it DI-injected
@@ -25,7 +31,7 @@ server App {
 
 :entry() {
   mongo.connect('mongodb://localhost:27017/hello_world').then(db => {
-    return serve(new App(db), 3000).then(server => {
+    return serve(App(db)).then(server => {
       print('Listening at http://localhost:%{server.port}');
     });
   });
