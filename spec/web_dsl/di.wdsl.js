@@ -16,7 +16,7 @@ proto ILoggable {
 // You must provide a static `singleton`.
 @singleton
 proto SomeSingleton {
-  let hello:String;
+  let hello:string;
   
   constructor SomeSingleton(this.hello);
   
@@ -24,13 +24,16 @@ proto SomeSingleton {
 }
 
 server App : ILoggable {
-  route "/greet/:id{[0-9]+}" (@parse id:int, @inject singleton:SomeSingleton) {
+  route "/greet/[:id([0-9]+)]"
+    (@parse id:int, @inject singleton:SomeSingleton) {
     return { message: singleton.hello };
   }
 }
 
 :entry() {
-  @inject let logger = new Logger('my-app:foo');
+  // Singleton!!!
+  @inject
+  let logger = new Logger('my-app:foo');
   
   // Invoking the `App` type will run the constructor, with DI
   // args injected.
