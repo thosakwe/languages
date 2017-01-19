@@ -1,0 +1,4 @@
+@export
+server App {
+  route '/json' => { message: 'Hello, world!' }
+}
